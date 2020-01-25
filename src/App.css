@@ -1,38 +1,82 @@
-.App {
-  text-align: center;
+#carousel {
+    display: flex;
+    justify-content: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#carousel > input {
+    
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+#img-container {
+    display: flex;
+    justify-content: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#slider {
+    background: #000;
+    border: 5px solid #eaeaea;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+    height: 250px;
+    width: 250px;
+    margin: 40px auto 0;
+    overflow: visible;
+    position: relative;
 }
 
-.App-link {
-  color: #61dafb;
+#mask {
+    display: flex;
+    justify-content: center;
+    height: 250px;
+    overflow: hidden;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+ #img-container .first {
+    animation: first 1s ease-in-out 1 alternate;
+    animation-fill-mode: forwards;
+}
+
+#img-container .second {
+    animation: second 1s ease-in-out 1 alternate;
+    animation-fill-mode: forwards;
+}
+
+#img-container .third {
+    animation: third 1s ease-in-out 1 alternate;
+    animation-fill-mode: forwards;
+}
+
+#img-container .fourth {
+    animation: fourth 1s ease-in-out 1 alternate;
+    animation-fill-mode: forwards;
+}
+
+#img-container .fifth {
+    animation: fifth 1s ease-in-out 1 alternate;
+    animation-fill-mode: forwards;
+}
+
+@keyframes first {
+    from { transform: translateX(0px); }
+    to { transform: translateX(500px); }
+}
+
+@keyframes second {
+    from { transform: translateX(500px); }
+    to { transform: translateX(250px); }
+}
+
+@keyframes third {
+    from { transform: translateX(250px); }
+    to { transform: translateX(0px); }
+}
+
+@keyframes fourth {
+    from { transform: translateX(0px); }
+    to { transform: translateX(-250px); }
+}
+
+@keyframes fifth {
+    from { transform: translateX(-250px); }
+    to { transform: translateX(-500px); }
 }
