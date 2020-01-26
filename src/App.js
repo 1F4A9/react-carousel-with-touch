@@ -16,48 +16,54 @@ class App extends React.Component {
             ],
             checked: [ false, false, true, false, false ],
             end: '0px',
-            start: '0px'
+            start: '0px',
         }
         this.onChange = this.onChange.bind(this);
+        this.onSwipe = this.onSwipe.bind(this);
     }
 
-    onChange(img, swipe = false) {
-
+    onSwipe(img, swipe, startVal) {
         const setCheck = this.state.checked.map(data => data = false)
-        setCheck[img.index + 1] = true;
-        this.setState({ checked: setCheck })
 
-        // kolla hur man endast läser av "ETT" svep och var gång det svepet skedde --> 
-        // bytar radio-button ett steg till höger respektive vänster
+        if (swipe === 'swiperight') {
+            const setCheck = this.state.checked.map(data => data = false)
+            setCheck[img.index + 1] = true;
+            this.setState({checked: setCheck})
+            this.onChange(this.state.img[img.index + 1])
+        }
 
-        // efter det skapa logik för att kunna byta bild
-
-        if (swipe === 'panright') {
+        if (swipe === 'swipeleft') {
             const setCheck = this.state.checked.map(data => data = false)
             setCheck[img.index - 1] = true;
-            this.setState({checked: setCheck})
-            console.log(this.state.checked)
-        }
-
-        if (swipe === 'panleft') {
-            const setCheck = this.state.checked.map(data => data = false)
-            setCheck[img.index] = true;
             this.setState({ checked: setCheck })
+            this.onChange(this.state.img[img.index - 1])
         }
 
-        if (!swipe) {
-            this.setState({ end: img.end })
-                
-            if (this.state.end !== this.state.start) {
-                this.setState({ start: this.state.end })
-            }
+        this.setState({start: startVal})
+    }
+
+    onChange(img) {
+        const setCheck = this.state.checked.map(data => data = false)
+
+        this.setState({ checked: setCheck })
+        setCheck[img.index] = true;
+        this.setState({ checked: setCheck })
+
+        this.setState({ end: img.end })
+        if (this.state.end !== this.state.start) {
+            this.setState({ start: this.state.end })
         }
+
+        console.log(this.state.end + "  <-- end")
+        console.log(this.state.start + "  <-- start")
+
+        this.setState({startVal: this.state.start})
     }
 
     render() {
         return (
             <div className="App">
-                <Carousel {...this.state} onChange={this.onChange} />
+                <Carousel {...this.state} onChange={this.onChange} onSwipe={this.onSwipe} />
             </div >
         );
     }

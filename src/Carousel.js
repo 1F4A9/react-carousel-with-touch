@@ -29,7 +29,9 @@ class Carousel extends React.Component {
     }
 
     componentDidMount() {
-        const { img, onChange } = this.props;
+        const { img, onSwipe } = this.props;
+
+        let start = null;
 
         this.mc0= new Hammer(this.state.hammer[0].container.current);
         this.mc1= new Hammer(this.state.hammer[1].container.current);
@@ -37,30 +39,44 @@ class Carousel extends React.Component {
         this.mc3= new Hammer(this.state.hammer[3].container.current);
         this.mc4= new Hammer(this.state.hammer[4].container.current);
 
-        this.mc0.on("panleft panright", (ev) => {
-            onChange(img[0], ev.type)
-            console.log(img[0]);
+        if (!img.index === 0) {
+            this.mc0.on("swipeleft swiperight", (ev) => {
+                start = '500px'
+                onSwipe(img[0], ev.type, start)
+            });
+        } else {
+            this.mc0.on("swiperight", (ev) => {
+                start = '500px'
+                onSwipe(img[0], ev.type, start)
+            });
+        }
+
+        this.mc1.on("swipeleft swiperight", (ev) => {
+            start = '250px'
+            onSwipe(img[1], ev.type, start)
         });
 
-        this.mc1.on("panleft panright", (ev) => {
-            onChange(img[1], ev.type)
-            console.log(img[1]); 
+        this.mc2.on("swipeleft swiperight", (ev) => {
+            start = '0px'
+            onSwipe(img[2], ev.type, start)
         });
 
-        this.mc2.on("panleft panright", (ev) => {
-            onChange(img[2], ev.type)
-            console.log(img[2]); 
+        this.mc3.on("swipeleft swiperight", (ev) => {
+            start = '-250px'
+            onSwipe(img[3], ev.type, start)
         });
 
-        this.mc3.on("panleft panright", (ev) => {
-            onChange(img[3], ev.type)
-            console.log(img[3]); 
-        });
-
-        this.mc4.on("panleft panright", (ev) => {
-            onChange(img[4], ev.type)
-            console.log(img[4]); 
-        });
+        if (!img.index === 4) {
+            this.mc4.on("swipeleft swiperight", (ev) => {
+                start = '-500px'
+                onSwipe(img[4], ev.type, start)
+            });
+        } else {
+            this.mc4.on("swipeleft", (ev) => {
+                start = '-500px'
+                onSwipe(img[4], ev.type, start)
+            });
+        }
     }
 
     componentWillUnmount(){
